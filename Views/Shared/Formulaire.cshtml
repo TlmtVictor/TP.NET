@@ -1,0 +1,126 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <! Lien vers ma feuille de style>
+    <link rel="stylesheet" href="~/resources/Index.css" />
+    <title>HN - TP LOCAL</title>
+</head>
+<body>
+
+    @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "font-weight: bold; color: red;" })
+
+    <! entête>
+    <header>
+        <img src="/resources/GroupeHN.png" class="image" alt="GroupeHN" />
+        <h1>Informations personelles</h1>
+    </header>
+
+    <! création du menu>
+    <nav>
+        <ul>
+            <li><a href="/Home/Index">Acceuil</a></li>
+            <li><a href="/Home/Index/Listedavis">Liste avis</a></li>
+        </ul>
+    </nav>
+
+    
+    <section>
+
+                                            <! Tableau avec formulaire >
+                                            <! 'action' définit la page de traitement des données quand on clique sur "Envoyer" >
+                                            <! 'method="post"' indique qu'on envoie les données de façon sécurisée (elles ne s'affichent pas dans l'URL) >
+                                            <! validationFormulaire envoie les données automatiquement à la classe correspondante dans le dossier models >
+        <form action="/Home/ValidationFormulaire" method="post">
+
+            <table>
+                <tr>                        <! tr tr une ligne dans un tableau >
+                                            <! th ligne d'entête >
+                                            <! td une cellule normale >
+                                            <! colspan fusionner 2 cellules pour avoir texte au milieu >
+                    <th colspan="2">Informations personnelles</th>
+                </tr>
+                <tr>
+                    <td>Nom</td>
+                    <td><input type="text" name="nom" required></td>
+                </tr>
+                <tr>
+                    <td>Prénom</td>
+                    <td><input type="text" name="prenom" required></td>
+                </tr>
+                <tr>
+                    <td>Genre</td>
+                    <td>                     <! option value = pour définir une liste de choix à cocher >
+                        <select name="genre" required>
+                            <option value="">Sélectionnez un sexe</option>
+                            <option value="homme">Homme</option>
+                            <option value="femme">Femme</option>
+                            <option value="autre">Autre</option>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Adresse</td>         <! input type = , définit une cellule où on peut rentrer du texte  >
+                    <td><input type="text" name="adresse"></td>
+                </tr>
+                <tr>
+                    <td>Code postal</td>     <! pattern="[0-9]{5} restriction du champ avec chiffre de 1 à 9 et seulement 5 caractères >
+                                             <! name = , réception l'information dans une variable avant de l'envoyer >
+                                             <! title = , mini fenêtre mobile qui s'affiche en tant qu'aide pour l'utilisateur >
+                    <td><input type="text" name="codepostal" pattern="[0-9]{5}" title="Entrez 5 chiffres"></td>
+                </tr>
+                <tr>
+                    <td>Ville</td>
+                    <td><input type="text" name="ville"></td>
+                </tr>
+                <tr>
+                    <td>Adresse mail</td>       <! required, oligation de champs avant envoie >
+                    <td><input type="email" name="email" required></td>
+                </tr>
+            </table>
+
+            <table>
+                <tr><th colspan="2">Informations sur la formation</th></tr>
+                <tr>
+                    <td>Date de début de la formation</td>
+                    <td><input type="date" name="dateDebut" required></td>
+                </tr>
+                <tr>
+                    <td>Type de formation</td>
+                    <td>
+                        <select name="typeFormation" required>
+                            <option value="">Sélectionnez un cours</option>
+                            <option value="cobol">Formation Cobol</option>
+                            <option value="objet">Formation par objet</option>
+                            <option value="double">Formation à double compétence</option>
+                        </select>
+                    </td>
+                </tr>
+            </table>
+
+            <table>
+                <tr>
+                    <th colspan="2">Avis sur la formation</th>
+                </tr>
+                <tr>
+                    <td>Formation Cobol</td>
+                    <td><input type="text" name="avisCobol" required></td>
+                </tr>
+                <tr>
+                    <td>Formation C#</td>
+                    <td><input type="text" name="avisCsharp" required></td>
+                </tr>
+            </table>
+
+                <tr>                 <! Bouton Unique, button type, créer un élèment pour cliquer et envoyer les informations >
+                    <td colspan="2" style="text-align: center;">
+                        <button type="submit">Valider</button>
+                    </td>
+                </tr>
+            
+        </form>
+
+    </section>
+
+</body>
+</html>

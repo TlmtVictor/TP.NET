@@ -31,23 +31,31 @@ namespace TPLOCAL1.Models
             // Retrieve the nodes, convert them to the "Avis" object, and add them to the "OpinionList" list.
             // Loop through each XmlNode node with the path "root/row" (see xml file structure)
             // The SelectNodes method retrieves all nodes with the specified path.
-            foreach (XmlNode node in xmlDoc.SelectNodes("root/row"))
+            var nodes = xmlDoc.SelectNodes("root/row");
+            if (nodes != null)
             {
-                // Retrieving data from child nodes.
-                string LastName = node["LastName"].InnerText;
-                string FirstName = node["FirstName"].InnerText;
-                string OpinionGiven = node["OpinionGiven"].InnerText;
-
-                // Creating the "Opinion" object to add to the results list.
-                Opinion opinion = new Opinion
+                // Safely get the InnerText of the <LastName> element from the current XML node.
+                // The null-conditional operator ?. prevents a NullReferenceException if the element is missing.
+                // If null, default to an empty string.
+                foreach (XmlNode node in nodes)
                 {
-                    LastName = LastName,
-                    FirstName = FirstName,
-                    OpinionGiven = OpinionGiven
-                };
+                    // Safely get the InnerText of the <FirstName> element from the current XML node.
+                    // Uses the same null-checking and default as above.
+                    string LastName = node["LastName"]?.InnerText ?? "";
+                    string FirstName = node["FirstName"]?.InnerText ?? "";
+                    string OpinionGiven = node["OpinionGiven"]?.InnerText ?? "";
 
-                // Adding the object to the list.
-                opinionList.Add(opinion);
+                    // Create a new Opinion object, initializing its properties
+                    // with the values extracted from the current XML node.
+                    Opinion opinion = new Opinion
+                    {
+                        LastName = LastName,
+                        FirstName = FirstName,
+                        OpinionGiven = OpinionGiven
+                    };
+
+                    opinionList.Add(opinion);
+                }
             }
 
             // Returning the list formed by processing to the calling method.
@@ -67,14 +75,14 @@ namespace TPLOCAL1.Models
         /// <summary>
         /// Last name
         /// </summary>
-        public string LastName { get; set; }
+        public string LastName { get; set; } = string.Empty;
         /// <summary>
         /// First name
         /// </summary>
-        public string FirstName { get; set; }
+        public string FirstName { get; set; } = string.Empty;
         /// <summary>
         /// Review given (Possible values: O or N)
         /// </summary>
-        public string OpinionGiven { get; set; }
+        public string OpinionGiven { get; set; } = string.Empty;
     }
 }

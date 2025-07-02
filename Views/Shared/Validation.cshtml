@@ -1,0 +1,112 @@
+﻿<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="utf-8" />
+    <! Lien vers ma feuille de style>
+    <link rel="stylesheet" href="~/resources/Index.css" />
+    <title>HN - TP LOCAL</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            border: none;
+            margin-bottom: 30px;
+            width: 30%;
+        }
+
+            table td, table th {
+                border: 3px double black;
+                padding: 5px;
+            }
+
+        th.hide {                                     /* ajouter un style spécifique à la cellule d'entête pour supprimer la bordure */
+            border: none;
+        }
+    </style>                                          
+</head>
+
+<body>
+    <! entête>
+    <header>
+        <img src="/resources/GroupeHN.png" class="image" alt="GroupeHN" />
+        <h1>Page de validation</h1>
+    </header>
+
+    <! création du menu>
+    <nav>
+        <ul>
+            <li><a href="/Home/Index">Acceuil</a></li>
+            <li><a href="/Home/Index/Listedavis">Liste avis</a></li>
+        </ul>
+    </nav>
+
+    <section>
+
+                                  <! 'action' définit la page de traitement des données quand on clique sur "Envoyer" >
+                                  <! 'method="post"' indique qu'on envoie les données de façon sécurisée (elles ne s'affichent pas dans l'URL) >
+
+        <table>
+            <tr>                          <! ajouter classe hide pour enlever la bordure >
+                <th colspan="2" class="hide">Votre formulaire a bient été pris en compte</th>
+            </tr>
+            <tr>
+                <td>Nom</td>
+                <td>@Model.nom</td>
+            </tr>
+            <tr>
+                <td>Prénom</td>
+                <td>@Model.prenom</td>
+            </tr>
+            <tr>
+                <td>Genre</td>
+                <td>@Model.genre</td>
+            </tr>
+            <tr>
+                <td>Adresse</td>         
+                <td>@Model.adresse</td>
+            </tr>
+            <tr>
+                <td>Code postal</td>     
+                <td>@Model.codepostal</td>
+            </tr>
+            <tr>
+                <td>Ville</td>
+                <td>@Model.ville</td>
+            </tr>
+            <tr>
+                <td>Adresse mail</td>      
+                <td>@Model.email</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr><th colspan="2" class="hide">Informations sur la formation</th></tr>
+            <tr>
+                <td>Date de début de la formation</td>
+                <td>@Model.dateDebut.ToString("dd/MM/yyyy")</td>
+            </tr>
+            <tr>
+                <td>Formation suivie</td>
+                <td>@Model.typeFormation</td>
+            </tr>
+        </table>
+
+        <table>
+            <tr>
+                <th colspan="2"class="hide">Avis sur la formation</th>
+            </tr>
+            <tr>
+                <td>Formation Cobol</td>
+                <td>@Model.avisCobol</td>
+            </tr>
+            <tr>
+                <td>Formation C#</td>
+                <td>@Model.avisCsharp</td>
+            </tr>
+        </table>
+
+
+    </section>
+
+</body>
+</html>
