@@ -51,23 +51,14 @@ namespace TPLOCAL1.Controllers
             _env = env;
         }
 
-
-
         //methode to send datas from form to validation page
         [HttpPost]
 
         // ici création d'une méthode ValidationFormulaire avec (nom de classe + paramètre qui réçoit les données)
-        public ActionResult ValidationFormulaire(FormModel model)
+        public ActionResult ValidationFormulaire(Modelestockage model)
         {
-            if (string.IsNullOrWhiteSpace(model.adresse) || model.adresse.Length < 5)
-            {
-                ModelState.AddModelError("", "L'adresse doit contenir au moins 5 caractères.");
-            }
-
-            if (model.dateDebut > DateTime.Today)
-            {
-                ModelState.AddModelError("", "La date de début ne peut pas être postérieure à aujourd'hui.");
-            }
+            ModelState.Remove("avisCsharp");
+            ModelState.Remove("avisCobol");
 
             if (ModelState.IsValid)
             {

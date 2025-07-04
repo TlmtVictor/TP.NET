@@ -1,99 +1,121 @@
-﻿<!DOCTYPE html>
+﻿@model TPLOCAL1.Models.Modelestockage
+
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="utf-8" />
-    <! Lien vers ma feuille de style>
+                                                                            <!-- Lien vers feuille de style -->
     <link rel="stylesheet" href="~/resources/Index.css" />
     <title>HN - TP LOCAL</title>
 </head>
 <body>
 
-    @Html.ValidationSummary(false, "", new { @class = "text-danger", style = "font-weight: bold; color: red;" })
+                                                              <!-- Affiche un résumé des erreurs de validation, si présentes après valdiation du formulaire -->
+    @Html.ValidationSummary(false, "", new { @class = "validation-summary" })
 
-    <! entête>
+                                                                                         <!-- entête -->
     <header>
         <img src="/resources/GroupeHN.png" class="image" alt="GroupeHN" />
-        <h1>Informations personelles</h1>
+        <h1>Informations personnelles</h1>
     </header>
 
-    <! création du menu>
+                                                                                         <!-- création du menu -->
     <nav>
         <ul>
-            <li><a href="/Home/Index">Acceuil</a></li>
+            <li><a href="/Home/Index">Accueil</a></li>
             <li><a href="/Home/Index/Listedavis">Liste avis</a></li>
         </ul>
     </nav>
 
-    
     <section>
 
-                                            <! Tableau avec formulaire >
-                                            <! 'action' définit la page de traitement des données quand on clique sur "Envoyer" >
-                                            <! 'method="post"' indique qu'on envoie les données de façon sécurisée (elles ne s'affichent pas dans l'URL) >
-                                            <! validationFormulaire envoie les données automatiquement à la classe correspondante dans le dossier models >
+                                                                    <!-- Formulaire qui envoie en POST vers la méthode ValidationFormulaire du contrôleur Home -->
         <form action="/Home/ValidationFormulaire" method="post">
 
             <table>
-                <tr>                        <! tr tr une ligne dans un tableau >
-                                            <! th ligne d'entête >
-                                            <! td une cellule normale >
-                                            <! colspan fusionner 2 cellules pour avoir texte au milieu >
+                <tr>
+                                                                    <!-- Entête fusionnant 2 colonnes -->
                     <th colspan="2">Informations personnelles</th>
                 </tr>
                 <tr>
                     <td>Nom</td>
-                    <td><input type="text" name="nom" required></td>
-                </tr>
-                <tr>
-                    <td>Prénom</td>
-                    <td><input type="text" name="prenom" required></td>
-                </tr>
-                <tr>
-                    <td>Genre</td>
-                    <td>                     <! option value = pour définir une liste de choix à cocher >
-                        <select name="genre" required>
-                            <option value="">Sélectionnez un sexe</option>
-                            <option value="homme">Homme</option>
-                            <option value="femme">Femme</option>
-                            <option value="autre">Autre</option>
-                        </select>
+                    <td>
+                                                                    <!-- Génère un input texte lié à la propriété 'nom' de ton modèle -->
+                                                                    <!-- ASP.NET génère name et id automatiquement selon la propriété -->
+                        @Html.TextBoxFor(m => m.nom)
                     </td>
                 </tr>
                 <tr>
-                    <td>Adresse</td>         <! input type = , définit une cellule où on peut rentrer du texte  >
-                    <td><input type="text" name="adresse"></td>
+                    <td>Prénom</td>
+                    <td>@Html.TextBoxFor(m => m.prenom)</td>  <!-- même principe que nom -->
                 </tr>
                 <tr>
-                    <td>Code postal</td>     <! pattern="[0-9]{5} restriction du champ avec chiffre de 1 à 9 et seulement 5 caractères >
-                                             <! name = , réception l'information dans une variable avant de l'envoyer >
-                                             <! title = , mini fenêtre mobile qui s'affiche en tant qu'aide pour l'utilisateur >
-                    <td><input type="text" name="codepostal" pattern="[0-9]{5}" title="Entrez 5 chiffres"></td>
+                    <td>Genre</td>
+                    <td>
+                                                                    <!-- Génère une liste déroulante liée à la propriété 'genre' -->
+                                                                    <!-- SelectList définit les options (Value = valeur envoyée, Text = affiché) -->
+                                                                    <!-- Model?.genre sert à préselectionner la bonne option selon valeur actuelle -->
+                        @Html.DropDownListFor(m => m.genre, new SelectList(
+                        new[]
+                        {
+                                                new { Value = "", Text = "Sélectionnez un sexe" },  // option vide par défaut
+                                                new { Value = "homme", Text = "Homme" },
+                                                new { Value = "femme", Text = "Femme" },
+                                                new { Value = "autre", Text = "Autre" }
+                                                }, "Value", "Text", Model?.genre))
+                    </td>
+                </tr>
+                <tr>
+                    <td>Adresse</td>
+                    <td>@Html.TextBoxFor(m => m.adresse)</td>
+                </tr>
+                <tr>
+                    <td>Code postal</td>
+                    <td>
+                                                                        <!-- TextBox avec attributs HTML personnalisés -->
+                                                                        <!-- pattern impose une validation côté client pour 5 chiffres -->
+                                                                        <!-- title sert à afficher une aide au survol ou sur mobile -->
+                        @Html.TextBoxFor(m => m.codepostal, new { pattern = "[0-9]{5}", title = "Entrez 5 chiffres" })
+                    </td>
                 </tr>
                 <tr>
                     <td>Ville</td>
-                    <td><input type="text" name="ville"></td>
+                    <td>@Html.TextBoxFor(m => m.ville)</td>
                 </tr>
                 <tr>
-                    <td>Adresse mail</td>       <! required, oligation de champs avant envoie >
-                    <td><input type="email" name="email" required></td>
+                    <td>Adresse mail</td>
+                    <td>
+                                                                        <!-- TextBox type email, validation automatique par navigateur -->
+                        @Html.TextBoxFor(m => m.email, new { type = "email" })
+                    </td>
                 </tr>
             </table>
 
             <table>
-                <tr><th colspan="2">Informations sur la formation</th></tr>
+                <tr>
+                    <th colspan="2">Informations sur la formation</th>
+                </tr>
                 <tr>
                     <td>Date de début de la formation</td>
-                    <td><input type="date" name="dateDebut" required></td>
+                    <td>
+                                                                        <!-- TextBox pour une date -->
+                                                                        <!-- "{0:yyyy-MM-dd}" formate la date au format HTML5 (yyyy-MM-dd) -->
+                                                                        <!-- type=date permet au navigateur d'afficher un sélecteur de date -->
+                        @Html.TextBoxFor(m => m.dateDebut, "{0:yyyy-MM-dd}", new { type = "date" })
+                    </td>
                 </tr>
                 <tr>
                     <td>Type de formation</td>
                     <td>
-                        <select name="typeFormation" required>
-                            <option value="">Sélectionnez un cours</option>
-                            <option value="cobol">Formation Cobol</option>
-                            <option value="objet">Formation par objet</option>
-                            <option value="double">Formation à double compétence</option>
-                        </select>
+                                                                        <!-- Liste déroulante pour le type de formation -->
+                        @Html.DropDownListFor(m => m.typeFormation, new SelectList(
+                                                new[]
+                                                {
+                                                new { Value = "", Text = "Sélectionnez un cours" },
+                                                new { Value = "cobol", Text = "Formation Cobol" },
+                                                new { Value = "objet", Text = "Formation par objet" },
+                                                new { Value = "double", Text = "Formation à double compétence" }
+                                                }, "Value", "Text", Model?.typeFormation))
                     </td>
                 </tr>
             </table>
@@ -104,20 +126,21 @@
                 </tr>
                 <tr>
                     <td>Formation Cobol</td>
-                    <td><input type="text" name="avisCobol" required></td>
+                    <td>@Html.TextBoxFor(m => m.avisCobol)</td>
                 </tr>
                 <tr>
                     <td>Formation C#</td>
-                    <td><input type="text" name="avisCsharp" required></td>
+                    <td>@Html.TextBoxFor(m => m.avisCsharp)</td>
                 </tr>
             </table>
 
-                <tr>                 <! Bouton Unique, button type, créer un élèment pour cliquer et envoyer les informations >
-                    <td colspan="2" style="text-align: center;">
-                        <button type="submit">Valider</button>
-                    </td>
-                </tr>
-            
+            <tr>
+                <td colspan="2" style="text-align: center;">
+                                                                   <!-- Bouton pour envoyer le formulaire -->
+                    <button type="submit">Valider</button>
+                </td>
+            </tr>
+
         </form>
 
     </section>

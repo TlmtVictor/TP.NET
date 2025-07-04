@@ -34,3 +34,60 @@ section {
 }
 
 
+table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    width: 30%;
+}
+
+th {
+    padding: 10px;
+    text-align: center;
+}
+
+td {
+    padding: 4px;
+}
+
+.text-danger {
+    color: red;
+    font-weight: bold;
+}
+
+.avis-table {
+    margin-bottom: 30px;
+    width: 20%;
+    padding: 5px;
+    text-align: center;
+}
+
+.avis-table th {
+        border: none;
+        padding: 4px;
+        text-align: center;
+    }
+
+
+.avis-table td {
+    border: 3px double black;
+    padding: 4px;
+    text-align: center;
+}
+
+
+/* Styles pour la cellule avis oui/non */
+.avis-oui {
+    background-color: lightgreen;
+    font-weight: bold;
+}
+
+.avis-non {
+    background-color: lightcoral;
+    font-weight: bold;
+}
+
+.validation-summary {
+    font-weight: bold;
+    color: red;
+}
+
